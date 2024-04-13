@@ -1,15 +1,8 @@
-FROM ubuntu:latest AS build
-
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
+FROM maven:3.8.3-openjdk-17 AS build
 COPY . .
+RUN mvn clean package -DskipTests
 
-RUN ./mvnw package --no-daemon
-
-FROM openjdk:17-jdk-slim
-
+FROM openjdk:17.0.1-jdk-slim
+COPY --from=build /target/tenor-0.0.1-SNAPSHOT.jar tenor.jar
 EXPOSE 8080
-
-COPY --from=target /target/demo-1.jar app.jar
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-jar","tenor.jar"]
