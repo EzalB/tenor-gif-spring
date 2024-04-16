@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @RequestMapping("/gif")
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"https://tenor-gif-app.netlify.app"})
 public class GifController {
 
     @Value("${apiKey}")
@@ -27,7 +27,7 @@ public class GifController {
     }
 
     @GetMapping("/search")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://tenor-gif-app.netlify.app/")
     public GifDto searchResult(@RequestParam("query") String parameter, @RequestParam(required = false, value = "pos") String pos) throws JsonProcessingException {
 
         String url = "https://tenor.googleapis.com/v2/search?q=" + parameter + "&key=" + API_KEY + "&client_key=" + CLIENT_KEY + "&limit=8" + "&media_filter=gif,gifpreview";
